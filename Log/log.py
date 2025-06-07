@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 from typing import Optional
 
 class WatchmanLogger:
-    def __init__(self, log_file: str = "logs/Watchman.log", log_level=logging.DEBUG, max_bytes: int = 10240, backup_count: int = 5):
+    def __init__(self, log_file: str = "logs/Watchman.log", log_level=logging.DEBUG, max_bytes: int = 1024, backup_count: int = 5):
         self.log_file = log_file
         self.log_level = log_level
         self.max_bytes = max_bytes
