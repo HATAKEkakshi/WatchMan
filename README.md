@@ -53,8 +53,8 @@ watchman/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/watchman.git
-cd watchman
+git clone https://github.com/HATAKEkakshi/WatchMan.git
+cd WatchMan
 ```
 ### 2.Create virtual environment
 ```
