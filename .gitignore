@@ -1,0 +1,7 @@
+__pycache__
+.mypy_cache
+.env
+venv
+logs
+log_vectore/Users/hemantkumar/Developer/backend/WatchMan/log_vector_store
+/Users/hemantkumar/Developer/backend/WatchMan/log_embeddings.npy

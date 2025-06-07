@@ -1,0 +1,9 @@
+fastapi[all]
+langchain-huggingface
+langchain_groq
+langchain
+python-dotenv
+langchain_community
+langchain_core
+scikit-learn
+faiss-cpu
