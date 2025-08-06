@@ -1,7 +1,23 @@
 from fastapi import FastAPI
-from src.watchman import watchman
+from fastapi.middleware.cors import CORSMiddleware
+from watchman.routes.log import router as log_router
 
+app = FastAPI(title="WatchMan Log Intelligence API", version="1.0.0")
 
-app = FastAPI()
-app.include_router(watchman, prefix="/watchman", tags=["watchman"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+app.include_router(log_router)
+
+@app.get("/")
+async def root():
+    return {"message": "WatchMan Log Intelligence API is running"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

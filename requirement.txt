@@ -8,3 +8,10 @@ langchain_core
 scikit-learn
 faiss-cpu
 streamlit
+sqlalchemy
+psycopg2-binary
+qdrant-client
+sentence-transformers
+redis
+motor
+

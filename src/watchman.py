@@ -23,14 +23,16 @@ watchman = APIRouter()
 logger = WatchmanLogger()
 
 prompt = ChatPromptTemplate.from_template(
-    """
-    Answer the question based on the context only.
-    Please provide the most accurate response based on the question
-    <context>
-    {context}
-    <context>
-    Question:{input}
-    """
+"""You are a log analysis assistant. You are given logs as context. Answer the question strictly based on the provided log data. Do not rely on any external knowledge or make assumptions beyond what is present in the logs.
+
+<context>
+{context}
+</context>
+
+Question: {input}
+
+Provide the most accurate, relevant, and concise answer derived solely from the log context above.
+"""
 )
 
 # Global vectorstore and embeddings model
