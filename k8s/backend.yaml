@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: watchman
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hatakekakashihk/watchmanbackend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MONGODB_URL
+          value: "mongodb://mongodb:27017"
+        - name: QDRANT_HOST
+          value: "qdrant"
+        - name: QDRANT_PORT
+          value: "6333"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: GROQ_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: watchman-secrets
+              key: groq-api-key
+        - name: TOKENIZERS_PARALLELISM
+          value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: watchman
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 8000
+    targetPort: 8000

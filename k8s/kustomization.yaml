@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: watchman
+
+resources:
+- namespace.yaml
+- secrets.yaml
+- mongodb.yaml
+- redis.yaml
+- qdrant.yaml
+- backend.yaml
+- frontend.yaml
+- ingress.yaml
+
+images:
+- name: hatakekakashihk/watchmanbackend
+  newTag: latest
+- name: hatakekakashihk/frontend
+  newTag: latest
+- name: hatakekakashihk/watchman-mongodb
+  newTag: latest
