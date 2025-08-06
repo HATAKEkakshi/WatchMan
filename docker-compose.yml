@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: watchman-mongodb
+    ports:
+      - "2701:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - watchman-network
+
+  redis:
+    image: redis:alpine
+    container_name: watchman-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - watchman-network
+
+  qdrant:
+    image: qdrant/qdrant
+    container_name: watchman-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - watchman-network
+
+  backend:
+    build: .
+    image: hatakekakashihk/watchmanbackend:latest
+    container_name: watchman-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - GROQ_API_KEY=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
+      - TOKENIZERS_PARALLELISM=false
+    depends_on:
+      - mongodb
+      - redis
+      - qdrant
+    networks:
+      - watchman-network
+
+  frontend:
+    build: ./watchman-ui
+    image: hatakekakashihk/frontend:latest
+    container_name: watchman-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - watchman-network
+
+volumes:
+  mongodb_data:
+  qdrant_data:
+
+networks:
+  watchman-network:
+    driver: bridge

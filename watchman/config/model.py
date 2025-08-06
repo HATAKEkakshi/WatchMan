@@ -21,10 +21,10 @@ Provide a helpful response based on the log information."""
 
 class ModelSettings(BaseSettings):
     GROQ_API_KEY: str
-    MONGODB_URL: str = "mongodb://localhost:27017"
-    QDRANT_HOST: str = "localhost"
+    MONGODB_URL: str = "mongodb://mongodb:27017"
+    QDRANT_HOST: str = "qdrant"
     QDRANT_PORT: int = 6333
-    REDIS_HOST: str = "localhost"
+    REDIS_HOST: str = "redis"
     REDIS_PORT: int = 6379
     
     model_config = _base_config

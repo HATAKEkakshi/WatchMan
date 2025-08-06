@@ -3,7 +3,7 @@ import random
 import time
 from datetime import datetime, timedelta
 
-API_URL = "http://127.0.0.1:8000/api/logs/"
+API_URL = "http://localhost:8000/api/logs/"
 
 # Log templates for different services
 BACKEND_LOGS = [
