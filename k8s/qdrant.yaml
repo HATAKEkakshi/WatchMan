@@ -22,6 +22,16 @@ spec:
         volumeMounts:
         - name: qdrant-storage
           mountPath: /qdrant/storage
+        readinessProbe:
+          tcpSocket:
+            port: 6333
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 6333
+          initialDelaySeconds: 30
+          periodSeconds: 30
       volumes:
       - name: qdrant-storage
         persistentVolumeClaim:
