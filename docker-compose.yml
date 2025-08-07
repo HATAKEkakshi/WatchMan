@@ -43,7 +43,7 @@ services:
       - QDRANT_PORT=6333
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - GROQ_API_KEY=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
+      - GROQ_API_KEY=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
       - TOKENIZERS_PARALLELISM=false
     depends_on:
       - mongodb

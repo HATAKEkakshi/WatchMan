@@ -40,14 +40,33 @@ class LogService:
             "timestamp": log_data["timestamp"].isoformat()
         }
         
-        qdrant_client.upsert(
-            collection_name="logs",
-            points=[PointStruct(
-                id=qdrant_id,
-                vector=embedding,
-                payload=qdrant_payload
-            )]
-        )
+        # Create collection if it doesn't exist
+        try:
+            qdrant_client.upsert(
+                collection_name="logs",
+                points=[PointStruct(
+                    id=qdrant_id,
+                    vector=embedding,
+                    payload=qdrant_payload
+                )]
+            )
+        except Exception as e:
+            if "doesn't exist" in str(e):
+                from qdrant_client.http.models import Distance, VectorParams
+                qdrant_client.create_collection(
+                    collection_name="logs",
+                    vectors_config=VectorParams(size=384, distance=Distance.COSINE)
+                )
+                qdrant_client.upsert(
+                    collection_name="logs",
+                    points=[PointStruct(
+                        id=qdrant_id,
+                        vector=embedding,
+                        payload=qdrant_payload
+                    )]
+                )
+            else:
+                raise e
         
         return LogResponse(
             id=mongo_id,

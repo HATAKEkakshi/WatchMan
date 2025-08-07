@@ -12,4 +12,4 @@ EXPOSE 8000
 # Add bulk log generator
 COPY generate_bulk_logs_docker.py .
 
-CMD ["sh", "-c", "python -c 'import app; print(\"App imported successfully\")' && uvicorn app:app --host 0.0.0.0 --port 8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
