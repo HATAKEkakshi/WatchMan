@@ -21,6 +21,29 @@ spec:
         volumeMounts:
         - name: mongodb-storage
           mountPath: /data/db
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        readinessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ismaster')"
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        livenessProbe:
+          exec:
+            command:
+            - mongo
+            - --eval
+            - "db.adminCommand('ismaster')"
+          initialDelaySeconds: 60
+          periodSeconds: 30
       volumes:
       - name: mongodb-storage
         persistentVolumeClaim:

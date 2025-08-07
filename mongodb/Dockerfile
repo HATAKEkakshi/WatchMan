@@ -1,4 +1,4 @@
-FROM mongo:latest
+FROM --platform=$BUILDPLATFORM mongo:latest
 
 # Copy initialization script
 COPY init-data.js /docker-entrypoint-initdb.d/
